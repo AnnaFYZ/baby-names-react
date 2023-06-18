@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import babyNameList from "./babyNamesData.json";
 import './App.css';
+
+function NamesFilter () {
+  return (
+    <div id="nameList">
+      {babyNameList
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((name) => {
+          return <span className={name.sex}>{name.name}</span>;
+        })}
+    </div>
+  );
+
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <NamesFilter />
     </div>
   );
 }
