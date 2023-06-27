@@ -24,3 +24,25 @@
   margin: 20px;
 
 }
+
+#favoriteList {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+  border-bottom: 3px solid green;
+  align-items: center;
+}
+
+.SearchField {
+  display: flex;
+  margin: auto;
+  margin-top: 2em;
+  height: 30px;
+  width: 350px;
+  border: 3px solid purple;
+  border-radius: 25px;
+  font-size: 24px;
+  font-style: italic;
+  color: darkgreen;
+  padding: 20px;
+}
