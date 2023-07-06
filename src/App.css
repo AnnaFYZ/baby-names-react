@@ -58,11 +58,18 @@
 }
 
 .hidden {
-  position: absolute;
-  left: -9999px;
+  visibility: hidden;
+  /* position: absolute;
+  left: -9999px; */
 }
 
-.Label:checked {
+.all {
   border-bottom: 3px solid #090;
-  
+  background-color: #090;
+}
+
+
+.Label-active {
+   border-bottom: 3px solid #090;
+   
 }

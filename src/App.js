@@ -3,9 +3,12 @@ import './App.css';
 import { useState } from "react";
 
 function GenderButton (props) {
+   
   return (
     <div>
-      <label className="Label"> 
+      <label
+        className={props.selectedOption === props.value ? "Label-active" : ""}
+      >
         <img className="genderButton" src={props.src} alt="gender" />
         <input
           id={props.id}
@@ -13,9 +16,9 @@ function GenderButton (props) {
           className="hidden"
           type="radio"
           value={props.value}
-          defaultChecked={props.defaultChecked}
-          // style={}
-        ></input>
+          checked={props.selectedOption === props.value}
+          onChange={() => props.onRadioChange(props.value)}
+        />
       </label>
     </div>
   );
@@ -25,6 +28,19 @@ function NamesFilter (props) {
   const [listToDisplay, setListToDisplay] = useState(props.list)
   const [search, setSearch] = useState("");
   const [favorites, setFavorites] = useState([]);
+  const [selected, setSelected] = useState("all");
+
+  const handleRadioChange = (event) => {
+    setSelected(event);
+  };
+
+  function filterForGender(item) {
+    if (selected === "all") {
+      return item;
+    } else {
+      return item.sex === selected;
+    }
+  }
   
   function filterFavorites (event) {
     setFavorites(favorites.concat({"name": event.target.innerText,
@@ -36,6 +52,7 @@ function NamesFilter (props) {
     setFavorites(favorites.filter((item) => item.name !== e.target.innerText))
     setListToDisplay(listToDisplay.concat(props.list.filter((item) => item.name === e.target.innerText)))
   }
+
   return (
     <div>
       <div className="SearchBar">
@@ -50,23 +67,23 @@ function NamesFilter (props) {
         <GenderButton
           id="allGenders"
           src="./boy-and-girl.png"
-          value=""
-          defaultChecked={true}
-          
+          value="all"
+          selectedOption={selected}
+          onRadioChange={handleRadioChange}
         />
         <GenderButton
           id="male"
           src="./baby-boy.png"
           value="m"
-          defaultChecked={false}
-          
+          selectedOption={selected}
+          onRadioChange={handleRadioChange}
         />
         <GenderButton
           id="female"
           src="./baby-girl1.png"
           value="f"
-          defaultChecked={false}
-          
+          selectedOption={selected}
+          onRadioChange={handleRadioChange}
         />
       </div>
       <div id="favoriteList">
@@ -78,6 +95,7 @@ function NamesFilter (props) {
           </span>
         </h2>
         {favorites
+          .filter(filterForGender)
           .filter((item) => {
             return search.toLowerCase() === ""
               ? item
@@ -98,6 +116,7 @@ function NamesFilter (props) {
       </div>
       <div id="nameList">
         {listToDisplay
+          .filter(filterForGender)
           .filter((item) => {
             return search.toLowerCase() === ""
               ? item
